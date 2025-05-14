@@ -39,13 +39,11 @@ begin
   MemoryStreamIn.ReadBuffer(Buff[0], MemSize);
   KeyIdx := 0;
   if (Encrypt = False) then for i:=0 to MemSize-1 do begin
-    if (KeyIdx = 31) then KeyIdx := 0;
     Buff[i] := DecryptByte(Buff[i], SaveKey[KeyIdx]);
-    KeyIdx := KeyIdx + 1;
+    if (KeyIdx = 30) then KeyIdx := 0 else KeyIdx := KeyIdx + 1;
   end else for i:=0 to MemSize-1 do begin
-    if (KeyIdx = 31) then KeyIdx := 0;
     Buff[i] := EncryptByte(Buff[i], SaveKey[KeyIdx]);
-    KeyIdx := KeyIdx + 1;
+    if (KeyIdx = 30) then KeyIdx := 0 else KeyIdx := KeyIdx + 1;
   end;
   MemoryStreamIn.Position := 0;
   MemoryStreamIn.WriteBuffer(Buff[0], MemSize);
