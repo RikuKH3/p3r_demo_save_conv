@@ -84,7 +84,7 @@ begin
     if (MemPos+$18 <= MemSize) then begin
       MemoryStream1.Position := MemPos + $18;
       MemoryStream1.WriteBuffer(DemoFlagBlock[45], 1);
-      if (Magic = $0B650015) then DecryptEncryptMemoryStream(MemoryStream1, MemSize, True);
+      DecryptEncryptMemoryStream(MemoryStream1, MemSize, True);
       if (ParamCount > 1) then MemoryStream1.SaveToFile(ParamStr(2)) else MemoryStream1.SaveToFile(ParamStr(1));
       Writeln('File converted successfully!');
     end else begin
@@ -104,7 +104,7 @@ begin
         MemoryStream2.CopyFrom(MemoryStream1, MemPos-4);
         MemoryStream2.WriteBuffer(DemoFlagBlock[0], $31);
         MemoryStream2.CopyFrom(MemoryStream1, MemSize-MemPos+4);
-        if (Magic = $0B650015) then DecryptEncryptMemoryStream(MemoryStream2, MemoryStream2.Size, True);
+        DecryptEncryptMemoryStream(MemoryStream2, MemSize+$31, True);
         if (ParamCount > 1) then MemoryStream2.SaveToFile(ParamStr(2)) else MemoryStream2.SaveToFile(ParamStr(1));
         Writeln('File converted successfully!');
       finally MemoryStream2.Free end;
@@ -114,10 +114,9 @@ end;
 
 begin
   try
-    Writeln('PERSONA 3 Reload Demo Save Converter v1.0 by RikuKH3');
+    Writeln('PERSONA 3 Reload Demo Save Converter v1.1 by RikuKH3');
     Writeln('----------------------------------------------------');
     if (ParamCount = 0) then begin Writeln('Usage: '+ExtractFileName(ParamStr(0))+' <input save file> [output save file]'); Readln; exit end;
     Main;
   except on E: Exception do begin Writeln(E.Message); Readln end end;
 end.
-
