@@ -31,7 +31,8 @@ const
   $6F,$6F,$77,$6F,$6F,$4E,$67,$69,$65,$33,$66,$61,$68,$50,$35,$4F,$68,$70,$68);
 var
   Buff: TBytes;
-  i, KeyIdx: Integer;
+  i: Int64;
+  KeyIdx: Integer;
 begin
   SetLength(Buff, MemSize);
   MemoryStreamIn.Position := 0;
